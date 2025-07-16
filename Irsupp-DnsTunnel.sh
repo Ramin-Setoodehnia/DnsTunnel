@@ -24,7 +24,7 @@ ${RESET}"
 LINE="${YELLOW}═══════════════════════════════════════════${RESET}"
 
 # دریافت IP و اطلاعات موقعیت بدون تحریم
-IP_ADDRv4=$(curl -s --max-time 5 https://api.ipify.org)
+IP_ADDRv4=$(curl -s --max-time 5 https://icanhazip.com -4)
 [ -z "$IP_ADDRv4" ] && IP_ADDRv4="Can't Find"
 
 IP_ADDRv6=$(curl -s --max-time 5 https://icanhazip.com)
