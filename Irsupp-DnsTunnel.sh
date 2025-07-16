@@ -9,7 +9,7 @@ WHITE="\e[1;97m"
 RESET="\e[0m"
 CYAN="\e[1;96m"
 
-# لوگو و بنر
+# لوگو
 echo -e "
 ${CYAN}
   ___   ____    ____                              ____                  _____                                  _ 
@@ -23,17 +23,21 @@ ${RESET}"
 # خطوط زرد
 LINE="${YELLOW}═══════════════════════════════════════════${RESET}"
 
-# دریافت اطلاعات IP و موقعیت (با مدیریت خطا)
-GEO_INFO=$(curl -s --max-time 5 https://ipwho.is/)
+# دریافت IP و اطلاعات موقعیت بدون تحریم
+IP_ADDRv4=$(curl -s --max-time 5 https://api.ipify.org)
+[ -z "$IP_ADDRv4" ] && IP_ADDRv4="Cant Find"
 
+IP_ADDRv6=$(curl -s --max-time 5 https://icanhazip.com)
+[ -z "$IP_ADDRv6" ] && IP_ADDRv6="Cant Find"
+
+GEO_INFO=$(curl -s --max-time 5 https://ipwho.is/)
 LOCATION=$(echo "$GEO_INFO" | grep '"country_code"' | cut -d '"' -f4)
 [ -z "$LOCATION" ] && LOCATION="Unknown"
 
 DATACENTER=$(echo "$GEO_INFO" | grep '"organization"' | cut -d '"' -f4)
 [ -z "$DATACENTER" ] && DATACENTER="Unknown"
 
-
-# نمایش بنر
+# نمایش اطلاعات
 echo -e "$LINE"
 echo -e "${CYAN}Script Version${RESET}: ${YELLOW}v1${RESET}"
 echo -e "${CYAN}Telegram Channel${RESET}: ${YELLOW}@irsuppchannel${RESET}"
