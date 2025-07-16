@@ -9,7 +9,7 @@ WHITE="\e[1;97m"
 RESET="\e[0m"
 CYAN="\e[1;96m"
 
-# نمایش لوگو
+# لوگو و بنر
 echo -e "
 ${CYAN}
   ___   ____    ____                              ____                  _____                                  _ 
@@ -25,10 +25,10 @@ LINE="${YELLOW}═════════════════════�
 
 # دریافت اطلاعات IP و موقعیت (با مدیریت خطا)
 IP_ADDRv4=$(curl -s --max-time 5 ifconfig.me -4)
-[ -z "$IP_ADDRv4" ] && IP_ADDRv4="Can't Find"
+[ -z "$IP_ADDRv4" ] && IP_ADDRv4="Cant Find"
 
 IP_ADDRv6=$(curl -s --max-time 5 ifconfig.me)
-[ -z "$IP_ADDRv6" ] && IP_ADDRv6="Can't Find"
+[ -z "$IP_ADDRv6" ] && IP_ADDRv6="Cant Find"
 
 GEO_INFO=$(curl -s --max-time 5 https://ipinfo.io/json)
 LOCATION=$(echo "$GEO_INFO" | grep '"country"' | cut -d '"' -f4)
@@ -37,7 +37,7 @@ LOCATION=$(echo "$GEO_INFO" | grep '"country"' | cut -d '"' -f4)
 DATACENTER=$(echo "$GEO_INFO" | grep '"org"' | cut -d '"' -f4)
 [ -z "$DATACENTER" ] && DATACENTER="Unknown"
 
-# بنر اطلاعات
+# نمایش بنر
 echo -e "$LINE"
 echo -e "${CYAN}Script Version${RESET}: ${YELLOW}v1${RESET}"
 echo -e "${CYAN}Telegram Channel${RESET}: ${YELLOW}@irsuppchannel${RESET}"
@@ -58,16 +58,12 @@ echo    "6. Close"
 echo -e "$LINE"
 read -p "Select option : " OPTION
 
-# تعیین نقش و فایل سرویس
-if [[ "$OPTION" != "6" ]]; then
-    read -p "Select Side (server/client): " ROLE
-    SERVICE_FILE="/etc/systemd/system/iodine-${ROLE}.service"
-fi
 
-# عملیات
 case "$OPTION" in
 
     1)
+        read -p "Select Side (server/client): " ROLE
+        SERVICE_FILE="/etc/systemd/system/iodine-${ROLE}.service"
         read -p "NS Address: " DOMAIN
         read -p "Tunnel Password: " PASSWORD
 
@@ -128,6 +124,8 @@ EOF
     ;;
 
     2)
+        read -p "Select Side (server/client): " ROLE
+        SERVICE_FILE="/etc/systemd/system/iodine-${ROLE}.service"
         echo -e "${YELLOW}Restarting service...${RESET}"
         systemctl restart $(basename "$SERVICE_FILE")
         echo -e "${GREEN}Service restarted.${RESET}"
@@ -135,6 +133,8 @@ EOF
     ;;
 
     3)
+        read -p "Select Side (server/client): " ROLE
+        SERVICE_FILE="/etc/systemd/system/iodine-${ROLE}.service"
         echo -e "${ORANGE}Opening service file for update...${RESET}"
         nano "$SERVICE_FILE"
         systemctl daemon-reload
@@ -143,6 +143,8 @@ EOF
     ;;
 
     4)
+        read -p "Select Side (server/client): " ROLE
+        SERVICE_FILE="/etc/systemd/system/iodine-${ROLE}.service"
         echo -e "${WHITE}Opening service file for edit...${RESET}"
         nano "$SERVICE_FILE"
         systemctl daemon-reload
@@ -151,6 +153,9 @@ EOF
     ;;
 
     5)
+        read -p "Select Side to uninstall (server/client): " ROLE
+        SERVICE_FILE="/etc/systemd/system/iodine-${ROLE}.service"
+
         if [ -f "$SERVICE_FILE" ]; then
             echo -e "${RED}Uninstalling service...${RESET}"
             systemctl stop $(basename "$SERVICE_FILE")
