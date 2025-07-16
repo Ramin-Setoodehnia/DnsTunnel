@@ -9,6 +9,7 @@ WHITE="\e[1;97m"
 RESET="\e[0m"
 CYAN="\e[1;96m"
 
+# نمایش لوگو
 echo -e "
 ${CYAN}
   ___   ____    ____                              ____                  _____                                  _ 
@@ -22,12 +23,12 @@ ${RESET}"
 # خطوط زرد
 LINE="${YELLOW}═══════════════════════════════════════════${RESET}"
 
-# گرفتن اطلاعات IP و موقعیت (با مدیریت خطا)
+# دریافت اطلاعات IP و موقعیت (با مدیریت خطا)
 IP_ADDRv4=$(curl -s --max-time 5 ifconfig.me -4)
-[ -z "$IP_ADDRv4" ] && IP_ADDRv4="Cant Find"
+[ -z "$IP_ADDRv4" ] && IP_ADDRv4="Can't Find"
 
 IP_ADDRv6=$(curl -s --max-time 5 ifconfig.me)
-[ -z "$IP_ADDRv6" ] && IP_ADDRv6="Cant Find"
+[ -z "$IP_ADDRv6" ] && IP_ADDRv6="Can't Find"
 
 GEO_INFO=$(curl -s --max-time 5 https://ipinfo.io/json)
 LOCATION=$(echo "$GEO_INFO" | grep '"country"' | cut -d '"' -f4)
@@ -36,7 +37,7 @@ LOCATION=$(echo "$GEO_INFO" | grep '"country"' | cut -d '"' -f4)
 DATACENTER=$(echo "$GEO_INFO" | grep '"org"' | cut -d '"' -f4)
 [ -z "$DATACENTER" ] && DATACENTER="Unknown"
 
-# بنر
+# بنر اطلاعات
 echo -e "$LINE"
 echo -e "${CYAN}Script Version${RESET}: ${YELLOW}v1${RESET}"
 echo -e "${CYAN}Telegram Channel${RESET}: ${YELLOW}@irsuppchannel${RESET}"
@@ -57,7 +58,7 @@ echo    "6. Close"
 echo -e "$LINE"
 read -p "Select option : " OPTION
 
-# تعیین نقش و فایل سرویس (برای همه گزینه‌ها به‌جز خروج)
+# تعیین نقش و فایل سرویس
 if [[ "$OPTION" != "6" ]]; then
     read -p "Select Side (server/client): " ROLE
     SERVICE_FILE="/etc/systemd/system/iodine-${ROLE}.service"
@@ -134,7 +135,7 @@ EOF
     ;;
 
     3)
-        echo -e "${ORANGE}Updating service (manual edit)...${RESET}"
+        echo -e "${ORANGE}Opening service file for update...${RESET}"
         nano "$SERVICE_FILE"
         systemctl daemon-reload
         systemctl restart $(basename "$SERVICE_FILE")
@@ -150,16 +151,16 @@ EOF
     ;;
 
     5)
-    if [ -f "$SERVICE_FILE" ]; then
-        echo -e "${RED}Uninstalling service...${RESET}"
-        systemctl stop $(basename "$SERVICE_FILE")
-        systemctl disable $(basename "$SERVICE_FILE")
-        rm -f "$SERVICE_FILE"
-        systemctl daemon-reload
-        echo -e "${GREEN}Service uninstalled.${RESET}"
-    else
-        echo -e "${RED}Service not found. Nothing to uninstall.${RESET}"
-    fi
+        if [ -f "$SERVICE_FILE" ]; then
+            echo -e "${RED}Uninstalling service...${RESET}"
+            systemctl stop $(basename "$SERVICE_FILE")
+            systemctl disable $(basename "$SERVICE_FILE")
+            rm -f "$SERVICE_FILE"
+            systemctl daemon-reload
+            echo -e "${GREEN}Service uninstalled successfully.${RESET}"
+        else
+            echo -e "${RED}Service not found. Nothing to uninstall.${RESET}"
+        fi
     ;;
 
     6)
