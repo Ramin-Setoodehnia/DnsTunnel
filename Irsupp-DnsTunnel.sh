@@ -24,18 +24,14 @@ ${RESET}"
 LINE="${YELLOW}═══════════════════════════════════════════${RESET}"
 
 # دریافت اطلاعات IP و موقعیت (با مدیریت خطا)
-IP_ADDRv4=$(curl -s --max-time 5 ifconfig.me -4)
-[ -z "$IP_ADDRv4" ] && IP_ADDRv4="Cant Find"
+GEO_INFO=$(curl -s --max-time 5 https://ipwho.is/)
 
-IP_ADDRv6=$(curl -s --max-time 5 ifconfig.me)
-[ -z "$IP_ADDRv6" ] && IP_ADDRv6="Cant Find"
-
-GEO_INFO=$(curl -s --max-time 5 https://ipinfo.io/json)
-LOCATION=$(echo "$GEO_INFO" | grep '"country"' | cut -d '"' -f4)
+LOCATION=$(echo "$GEO_INFO" | grep '"country_code"' | cut -d '"' -f4)
 [ -z "$LOCATION" ] && LOCATION="Unknown"
 
-DATACENTER=$(echo "$GEO_INFO" | grep '"org"' | cut -d '"' -f4)
+DATACENTER=$(echo "$GEO_INFO" | grep '"organization"' | cut -d '"' -f4)
 [ -z "$DATACENTER" ] && DATACENTER="Unknown"
+
 
 # نمایش بنر
 echo -e "$LINE"
