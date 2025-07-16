@@ -22,20 +22,27 @@ ${RESET}"
 # خطوط زرد
 LINE="${YELLOW}═══════════════════════════════════════════${RESET}"
 
+# گرفتن اطلاعات IP و موقعیت (با مدیریت خطا)
+IP_ADDRv4=$(curl -s --max-time 5 ifconfig.me -4)
+[ -z "$IP_ADDRv4" ] && IP_ADDRv4="Cant Find"
 
+IP_ADDRv6=$(curl -s --max-time 5 ifconfig.me)
+[ -z "$IP_ADDRv6" ] && IP_ADDRv6="Cant Find"
 
-# گرفتن اطلاعات IP و موقعیت
-IP_ADDR=$(curl -s ifconfig.me)
-GEO_INFO=$(curl -s https://ipinfo.io/json)
+GEO_INFO=$(curl -s --max-time 5 https://ipinfo.io/json)
 LOCATION=$(echo "$GEO_INFO" | grep '"country"' | cut -d '"' -f4)
+[ -z "$LOCATION" ] && LOCATION="Unknown"
+
 DATACENTER=$(echo "$GEO_INFO" | grep '"org"' | cut -d '"' -f4)
+[ -z "$DATACENTER" ] && DATACENTER="Unknown"
 
 # بنر
 echo -e "$LINE"
 echo -e "${CYAN}Script Version${RESET}: ${YELLOW}v1${RESET}"
 echo -e "${CYAN}Telegram Channel${RESET}: ${YELLOW}@irsuppchannel${RESET}"
 echo -e "$LINE"
-echo -e "${CYAN}IP Address${RESET}: ${YELLOW}$IP_ADDR${RESET}"
+echo -e "${CYAN}IPv4 Address${RESET}: ${YELLOW}$IP_ADDRv4${RESET}"
+echo -e "${CYAN}IPv6 Address${RESET}: ${YELLOW}$IP_ADDRv6${RESET}"
 echo -e "${CYAN}Location${RESET}: ${YELLOW}$LOCATION${RESET}"
 echo -e "${CYAN}Datacenter${RESET}: ${YELLOW}$DATACENTER${RESET}"
 echo -e "$LINE"
