@@ -9,8 +9,20 @@ WHITE="\e[1;97m"
 RESET="\e[0m"
 CYAN="\e[1;96m"
 
+echo -e "
+${CYAN}
+  ___   ____    ____                              ____                  _____                                  _ 
+ |_ _| |  _ \  / ___|   _   _   _ __    _ __     |  _ \   _ __    ___  |_   _|  _   _   _ __    _ __     ___  | |
+  | |  | |_) | \___ \  | | | | | '_ \  | '_ \    | | | | | '_ \  / __|   | |   | | | | | '_ \  | '_ \   / _ \ | |
+  | |  |  _ <   ___) | | |_| | | |_) | | |_) |   | |_| | | | | | \__ \   | |   | |_| | | | | | | | | | |  __/ | |
+ |___| |_| \_\ |____/   \__,_| | .__/  | .__/    |____/  |_| |_| |___/   |_|    \__,_| |_| |_| |_| |_|  \___| |_|
+                               |_|     |_|                                                                         
+${RESET}"
+
 # خطوط زرد
 LINE="${YELLOW}═══════════════════════════════════════════${RESET}"
+
+
 
 # گرفتن اطلاعات IP و موقعیت
 IP_ADDR=$(curl -s ifconfig.me)
@@ -20,12 +32,12 @@ DATACENTER=$(echo "$GEO_INFO" | grep '"org"' | cut -d '"' -f4)
 
 # بنر
 echo -e "$LINE"
-echo -e "${GREEN}Script Version${RESET}: ${YELLOW}v1${RESET}"
-echo -e "${GREEN}Telegram Channel${RESET}: ${YELLOW}@irsuppchannel${RESET}"
+echo -e "${CYAN}Script Version${RESET}: ${YELLOW}v1${RESET}"
+echo -e "${CYAN}Telegram Channel${RESET}: ${YELLOW}@irsuppchannel${RESET}"
 echo -e "$LINE"
-echo -e "${GREEN}IP Address${RESET}: ${YELLOW}$IP_ADDR${RESET}"
-echo -e "${GREEN}Location${RESET}: ${YELLOW}$LOCATION${RESET}"
-echo -e "${GREEN}Datacenter${RESET}: ${YELLOW}$DATACENTER${RESET}"
+echo -e "${CYAN}IP Address${RESET}: ${YELLOW}$IP_ADDR${RESET}"
+echo -e "${CYAN}Location${RESET}: ${YELLOW}$LOCATION${RESET}"
+echo -e "${CYAN}Datacenter${RESET}: ${YELLOW}$DATACENTER${RESET}"
 echo -e "$LINE"
 
 # منوی رنگی
