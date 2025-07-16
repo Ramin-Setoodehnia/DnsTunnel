@@ -1,2 +1,3 @@
-# DnsTunnel
-Simple But Powerful Tunnel
+# IRSupp DNS Tunnel
+
+یک راهکار **ساده** ولی **موثر** برای تونل‌سازی بین سرورهای **ایران** و **خارج**.
