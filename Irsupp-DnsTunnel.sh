@@ -25,16 +25,16 @@ LINE="${YELLOW}═════════════════════�
 
 # دریافت IP و اطلاعات موقعیت بدون تحریم
 IP_ADDRv4=$(curl -s --max-time 5 https://api.ipify.org)
-[ -z "$IP_ADDRv4" ] && IP_ADDRv4="Cant Find"
+[ -z "$IP_ADDRv4" ] && IP_ADDRv4="Can't Find"
 
 IP_ADDRv6=$(curl -s --max-time 5 https://icanhazip.com)
-[ -z "$IP_ADDRv6" ] && IP_ADDRv6="Cant Find"
+[ -z "$IP_ADDRv6" ] && IP_ADDRv6="Can't Find"
 
 GEO_INFO=$(curl -s --max-time 5 https://ipwho.is/)
-LOCATION=$(echo "$GEO_INFO" | grep '"country_code"' | cut -d '"' -f4)
+LOCATION=$(echo "$GEO_INFO" | grep '"country"' | cut -d '"' -f4)
 [ -z "$LOCATION" ] && LOCATION="Unknown"
 
-DATACENTER=$(echo "$GEO_INFO" | grep '"organization"' | cut -d '"' -f4)
+DATACENTER=$(echo "$GEO_INFO" | grep '"org"' | cut -d '"' -f4)
 [ -z "$DATACENTER" ] && DATACENTER="Unknown"
 
 # نمایش اطلاعات
