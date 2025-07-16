@@ -27,7 +27,7 @@ LINE="${YELLOW}═════════════════════�
 IP_ADDRv4=$(curl -s --max-time 5 https://api.ipify.org)
 [ -z "$IP_ADDRv4" ] && IP_ADDRv4="Can't Find"
 
-IP_ADDRv6=$(curl -s --max-time 5 https://icanhazip.com)
+IP_ADDRv6=$(curl -s --max-time 5 https://icanhazip.com -6)
 [ -z "$IP_ADDRv6" ] && IP_ADDRv6="Can't Find"
 
 # دریافت اطلاعات کشور و دیتاسنتر از ipwho.is
