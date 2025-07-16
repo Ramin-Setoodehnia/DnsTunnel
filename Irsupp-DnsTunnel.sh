@@ -55,7 +55,7 @@ echo -e "${WHITE}4. Edit${RESET}"
 echo -e "${RED}5. Uninstall${RESET}"
 echo    "6. Close"
 echo -e "$LINE"
-read -p "Select option (1/2/3/4/5/6): " OPTION
+read -p "Select option : " OPTION
 
 # تعیین نقش و فایل سرویس (برای همه گزینه‌ها به‌جز خروج)
 if [[ "$OPTION" != "6" ]]; then
