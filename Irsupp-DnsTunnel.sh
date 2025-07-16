@@ -1,29 +1,36 @@
 #!/bin/bash
 
-echo "🛠️  IRsupp DNS Tunnel Auto Installer"
+echo "
+  ___   ____    ____                              ____                  _____                                  _ 
+ |_ _| |  _ \  / ___|   _   _   _ __    _ __     |  _ \   _ __    ___  |_   _|  _   _   _ __    _ __     ___  | |
+  | |  | |_) | \___ \  | | | | | '_ \  | '_ \    | | | | | '_ \  / __|   | |   | | | | | '_ \  | '_ \   / _ \ | |
+  | |  |  _ <   ___) | | |_| | | |_) | | |_) |   | |_| | | | | | \__ \   | |   | |_| | | | | | | | | | |  __/ | |
+ |___| |_| \_\ |____/   \__,_| | .__/  | .__/    |____/  |_| |_| |___/   |_|    \__,_| |_| |_| |_| |_|  \___| |_|
+                               |_|     |_|
+"
 echo "--------------------------------------"
 
-read -p "📍 لطفاً مشخص کن (server/client): " ROLE
-read -p "🌐 دامنه (مثال: dns.irlesson.ir): " DOMAIN
-read -p "🔑 پسورد تونل: " PASSWORD
+read -p "📍 Select Side (server/client): " ROLE
+read -p "🌐 Enther Your NS Address (Example : dns.irsupp.ir): " DOMAIN
+read -p "🔑 Tunnel Password: " PASSWORD
 
 if [ "$ROLE" == "server" ]; then
-    read -p "🎯 آدرس IP داخل تونل (مثلاً 10.0.0.1): " TUNNEL_IP
+    read -p "🎯 Enter Your Server Tunnel IP (Example: 10.0.0.1): " TUNNEL_IP
 elif [ "$ROLE" == "client" ]; then
-    echo "✔️ حالت کلاینت انتخاب شد. IP داخل تونل نیاز نیست."
+    echo "✔️ On Client Side No Need IP It choice Automaticaly"
 else
-    echo "❌ نقش وارد شده نامعتبر است."
+    echo "❌ Wrong Side "
     exit 1
 fi
 
 # نصب iodine
-echo "🚀 در حال نصب iodine..."
+echo "🚀 Install iodine..."
 apt update && apt install iodine -y
 
 # ساخت فایل سرویس systemd بر اساس نقش
 SERVICE_FILE="/etc/systemd/system/iodine-${ROLE}.service"
 
-echo "⚙️ در حال ساخت فایل سرویس systemd..."
+echo "⚙️ Building a service based on the role..."
 
 if [ "$ROLE" == "server" ]; then
 
@@ -63,12 +70,12 @@ EOF
 fi
 
 # فعال‌سازی و اجرای سرویس
-echo "🚦 در حال فعال‌سازی و اجرای سرویس systemd..."
+echo "🚦 Activating and running the service..."
 systemctl daemon-reload
 systemctl enable $(basename "$SERVICE_FILE")
 systemctl restart $(basename "$SERVICE_FILE")
 
-echo "✅ نصب و راه‌اندازی $ROLE با موفقیت انجام شد!"
-echo "📊 وضعیت سرویس:"
+echo "✅ $ROLE Side Installed and Ready"
+echo "📊 Service status :"
 systemctl status $(basename "$SERVICE_FILE") --no-pager
 
