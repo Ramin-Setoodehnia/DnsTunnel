@@ -1,49 +1,69 @@
 #!/bin/bash
 
-echo "
-  ___   ____    ____                              ____                  _____                                  _ 
- |_ _| |  _ \  / ___|   _   _   _ __    _ __     |  _ \   _ __    ___  |_   _|  _   _   _ __    _ __     ___  | |
-  | |  | |_) | \___ \  | | | | | '_ \  | '_ \    | | | | | '_ \  / __|   | |   | | | | | '_ \  | '_ \   / _ \ | |
-  | |  |  _ <   ___) | | |_| | | |_) | | |_) |   | |_| | | | | | \__ \   | |   | |_| | | | | | | | | | |  __/ | |
- |___| |_| \_\ |____/   \__,_| | .__/  | .__/    |____/  |_| |_| |___/   |_|    \__,_| |_| |_| |_| |_|  \___| |_|
-                               |_|     |_|                                                                         
-"
+# رنگ‌ها
+GREEN="\e[1;92m"
+YELLOW="\e[1;93m"
+ORANGE="\e[38;5;208m"
+RED="\e[1;91m"
+WHITE="\e[1;97m"
+RESET="\e[0m"
+CYAN="\e[1;96m"
 
-echo "--------------------------------------"
-echo "💠 1. Install"
-echo "🔄 2. Restart"
-echo "⬆️ 3. Update"
-echo "🛠️ 4. Edit"
-echo "❌ 5. Close"
-echo "--------------------------------------"
-read -p "💬 Please choose an option (1/2/3/4/5): " OPTION
+# خطوط زرد
+LINE="${YELLOW}═══════════════════════════════════════════${RESET}"
 
-# انتخاب نقش و نام فایل سرویس
-if [[ "$OPTION" == "1" || "$OPTION" == "2" || "$OPTION" == "3" || "$OPTION" == "4" ]]; then
-    read -p "📍 Select Side (server/client): " ROLE
+# گرفتن اطلاعات IP و موقعیت
+IP_ADDR=$(curl -s ifconfig.me)
+GEO_INFO=$(curl -s https://ipinfo.io/json)
+LOCATION=$(echo "$GEO_INFO" | grep '"country"' | cut -d '"' -f4)
+DATACENTER=$(echo "$GEO_INFO" | grep '"org"' | cut -d '"' -f4)
+
+# بنر
+echo -e "$LINE"
+echo -e "${GREEN}Script Version${RESET}: ${YELLOW}v1${RESET}"
+echo -e "${GREEN}Telegram Channel${RESET}: ${YELLOW}@irsuppchannel${RESET}"
+echo -e "$LINE"
+echo -e "${GREEN}IP Address${RESET}: ${YELLOW}$IP_ADDR${RESET}"
+echo -e "${GREEN}Location${RESET}: ${YELLOW}$LOCATION${RESET}"
+echo -e "${GREEN}Datacenter${RESET}: ${YELLOW}$DATACENTER${RESET}"
+echo -e "$LINE"
+
+# منوی رنگی
+echo -e "${GREEN}1. Install${RESET}"
+echo -e "${YELLOW}2. Restart${RESET}"
+echo -e "${ORANGE}3. Update${RESET}"
+echo -e "${WHITE}4. Edit${RESET}"
+echo -e "${RED}5. Uninstall${RESET}"
+echo    "6. Close"
+echo -e "$LINE"
+read -p "Select option (1/2/3/4/5/6): " OPTION
+
+# تعیین نقش و فایل سرویس (برای همه گزینه‌ها به‌جز خروج)
+if [[ "$OPTION" != "6" ]]; then
+    read -p "Select Side (server/client): " ROLE
     SERVICE_FILE="/etc/systemd/system/iodine-${ROLE}.service"
 fi
 
-# پردازش انتخاب کاربر
+# عملیات
 case "$OPTION" in
 
     1)
-        read -p "🌐 Enter Your NS Address (Example : dns.irsupp.ir): " DOMAIN
-        read -p "🔑 Tunnel Password: " PASSWORD
+        read -p "NS Address: " DOMAIN
+        read -p "Tunnel Password: " PASSWORD
 
         if [ "$ROLE" == "server" ]; then
-            read -p "🎯 Enter Your Server Tunnel IP (Example: 10.0.0.1): " TUNNEL_IP
+            read -p "Server Tunnel IP: " TUNNEL_IP
         elif [ "$ROLE" == "client" ]; then
-            echo "✔️ On Client Side No Need IP. It's handled automatically."
+            echo -e "${GREEN}Client side detected. IP not required.${RESET}"
         else
-            echo "❌ Wrong Side"
+            echo -e "${RED}Invalid side selected.${RESET}"
             exit 1
         fi
 
-        echo "🚀 Installing iodine..."
+        echo -e "${GREEN}Installing iodine...${RESET}"
         apt update && apt install iodine -y
 
-        echo "⚙️ Generating service file..."
+        echo -e "${GREEN}Building service...${RESET}"
 
         if [ "$ROLE" == "server" ]; then
             cat > "$SERVICE_FILE" <<EOF
@@ -78,45 +98,54 @@ WantedBy=multi-user.target
 EOF
         fi
 
-        echo "🚦 Enabling and starting service..."
+        echo -e "${GREEN}Enabling and starting service...${RESET}"
         systemctl daemon-reload
         systemctl enable $(basename "$SERVICE_FILE")
         systemctl restart $(basename "$SERVICE_FILE")
 
-        echo "✅ $ROLE installed and running."
+        echo -e "${GREEN}Installation complete.${RESET}"
         systemctl status $(basename "$SERVICE_FILE") --no-pager
     ;;
 
     2)
-        echo "🔄 Restarting service..."
+        echo -e "${YELLOW}Restarting service...${RESET}"
         systemctl restart $(basename "$SERVICE_FILE")
-        echo "✅ Service restarted."
+        echo -e "${GREEN}Service restarted.${RESET}"
         systemctl status $(basename "$SERVICE_FILE") --no-pager
     ;;
 
     3)
-        echo "⬆️ Updating service..."
+        echo -e "${ORANGE}Updating service (manual edit)...${RESET}"
         nano "$SERVICE_FILE"
         systemctl daemon-reload
         systemctl restart $(basename "$SERVICE_FILE")
-        echo "✅ Service updated and restarted."
+        echo -e "${GREEN}Service updated and restarted.${RESET}"
     ;;
 
     4)
-        echo "🛠️ Opening service file for manual edit..."
+        echo -e "${WHITE}Opening service file for edit...${RESET}"
         nano "$SERVICE_FILE"
         systemctl daemon-reload
         systemctl restart $(basename "$SERVICE_FILE")
-        echo "✅ Service edited and restarted."
+        echo -e "${GREEN}Service edited and restarted.${RESET}"
     ;;
 
     5)
-        echo "👋 Exiting script."
+        echo -e "${RED}Uninstalling service...${RESET}"
+        systemctl stop $(basename "$SERVICE_FILE")
+        systemctl disable $(basename "$SERVICE_FILE")
+        rm -f "$SERVICE_FILE"
+        systemctl daemon-reload
+        echo -e "${GREEN}Service uninstalled.${RESET}"
+    ;;
+
+    6)
+        echo "Closing script."
         exit 0
     ;;
 
     *)
-        echo "❌ Invalid option selected."
+        echo -e "${RED}Invalid option selected.${RESET}"
     ;;
 
 esac
