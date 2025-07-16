@@ -150,12 +150,16 @@ EOF
     ;;
 
     5)
+    if [ -f "$SERVICE_FILE" ]; then
         echo -e "${RED}Uninstalling service...${RESET}"
         systemctl stop $(basename "$SERVICE_FILE")
         systemctl disable $(basename "$SERVICE_FILE")
         rm -f "$SERVICE_FILE"
         systemctl daemon-reload
         echo -e "${GREEN}Service uninstalled.${RESET}"
+    else
+        echo -e "${RED}Service not found. Nothing to uninstall.${RESET}"
+    fi
     ;;
 
     6)
