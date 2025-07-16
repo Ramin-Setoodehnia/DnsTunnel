@@ -1,5 +1,5 @@
 #!/bin/bash
-
+clear
 # رنگ‌ها
 GREEN="\e[1;92m"
 YELLOW="\e[1;93m"
