@@ -23,18 +23,22 @@ ${RESET}"
 # خطوط زرد
 LINE="${YELLOW}═══════════════════════════════════════════${RESET}"
 
-# دریافت IP و اطلاعات موقعیت بدون تحریم
-IP_ADDRv4=$(curl -s --max-time 5 https://icanhazip.com -4)
+# دریافت IP بدون تحریم
+IP_ADDRv4=$(curl -s --max-time 5 https://api.ipify.org)
 [ -z "$IP_ADDRv4" ] && IP_ADDRv4="Can't Find"
 
 IP_ADDRv6=$(curl -s --max-time 5 https://icanhazip.com)
 [ -z "$IP_ADDRv6" ] && IP_ADDRv6="Can't Find"
 
+# دریافت اطلاعات کشور و دیتاسنتر از ipwho.is
 GEO_INFO=$(curl -s --max-time 5 https://ipwho.is/)
-LOCATION=$(echo "$GEO_INFO" | grep '"country"' | cut -d '"' -f4)
+
+# استخراج کشور (country)
+LOCATION=$(echo "$GEO_INFO" | grep -oP '"country"\s*:\s*"\K[^"]+')
 [ -z "$LOCATION" ] && LOCATION="Unknown"
 
-DATACENTER=$(echo "$GEO_INFO" | grep '"org"' | cut -d '"' -f4)
+# استخراج دیتاسنتر (connection.org)
+DATACENTER=$(echo "$GEO_INFO" | grep -oP '"org"\s*:\s*"\K[^"]+')
 [ -z "$DATACENTER" ] && DATACENTER="Unknown"
 
 # نمایش اطلاعات
@@ -47,6 +51,7 @@ echo -e "${CYAN}IPv6 Address${RESET}: ${YELLOW}$IP_ADDRv6${RESET}"
 echo -e "${CYAN}Location${RESET}: ${YELLOW}$LOCATION${RESET}"
 echo -e "${CYAN}Datacenter${RESET}: ${YELLOW}$DATACENTER${RESET}"
 echo -e "$LINE"
+
 
 # منوی رنگی
 echo -e "${GREEN}1. Install${RESET}"
