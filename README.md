@@ -26,7 +26,13 @@
 
 - لینوکس (Debian, Ubuntu, VPS)
 - دسترسی root یا sudo
-- نصب پکیج‌های زیر:
+- یک دامین و ساخت رکورد های زیر
+
+| Type | Name                 | Content                |
+|------|----------------------|------------------------|
+| NS   | dns.yourdomain.com   | hello.yourdomain.com   |
+| A    | hello.yourdomain.com | <IP Server Kharej>     |
+
 
 ```bash
 apt install iodine curl -y
