@@ -14,7 +14,11 @@
 
 [مشاهده آموزش ویدیویی](https://youtu.be/QpYZnoYaTRc?si=HSDPTqNJeaMmBQmt)
 
-
+<p align="center">
+  <a href="https://youtu.be/QpYZnoYaTRc?si=11YCJNwi8bHGdWda">
+    🎥 مشاهده آموزش ویدیویی  
+  </a>
+</p>
 ---
 
 ## ویژگی‌های اسکریپت
