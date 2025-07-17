@@ -31,7 +31,7 @@
 | Type | Name                 | Content                |
 |------|----------------------|------------------------|
 | NS   | dns.yourdomain.com   | hello.yourdomain.com   |
-| A    | hello.yourdomain.com | <IP Server Kharej>     |
+| A    | hello.yourdomain.com | Your_Forign_IP         |
 
 
 ```bash
