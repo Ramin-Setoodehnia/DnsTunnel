@@ -34,9 +34,6 @@
 | A    | hello.yourdomain.com | Your_Forign_IP         |
 
 
-```bash
-apt install iodine curl -y
-```
 
 ---
 
