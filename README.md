@@ -26,7 +26,12 @@
 
 - لینوکس (Debian, Ubuntu)
 - دسترسی root یا sudo
-- نصب پکیج‌های زیر:
+
+## نحوه استفاده
+1- ابتدا فایل اسکریپت را دانلود و اجرا کنید
 
 ```bash
-apt install iodine curl -y
+wget https://github.com/IRSupp/DnsTunnel/raw/main/Irsupp-DnsTunnel.sh
+chmod +x Irsupp-DnsTunnel.sh
+sudo ./Irsupp-DnsTunnel.sh
+
