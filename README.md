@@ -35,6 +35,7 @@
 wget https://github.com/IRSupp/DnsTunnel/raw/main/Irsupp-DnsTunnel.sh
 chmod +x Irsupp-DnsTunnel.sh
 sudo ./Irsupp-DnsTunnel.sh
+```
 
 مثال راه‌اندازی سرور
 در نقش سرور، پس از انتخاب گزینه Install، اسکریپت اطلاعات زیر را از شما می‌گیرد:
