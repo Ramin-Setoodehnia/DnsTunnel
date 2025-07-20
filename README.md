@@ -112,6 +112,6 @@ iodine -f -P your_password dns.yourdomain.com
 
 ## لایسنس
 
-MIT License
+Apache-2.0 license
 
 </div>
